@@ -1,0 +1,78 @@
+/* ===========================================
+   ホーム画面
+=========================================== */
+
+.home-screen {
+    min-height: 100vh;
+    background: var(--color-bg);
+}
+
+/* ヘッダー */
+.home-header {
+    height: 52px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.home-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.home-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+.header-filter-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.header-date-input {
+    padding: 5px 8px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--color-text-primary);
+    background: var(--color-surface);
+}
+
+.header-date-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-light);
+}
+
+.notification-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
