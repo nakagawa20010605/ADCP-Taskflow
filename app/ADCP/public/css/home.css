@@ -75,4 +75,253 @@
     border: none;
     cursor: pointer;
 }
+.notification-btn:hover {
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+}
 
+.notification-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 1.5px solid var(--color-surface);
+}
+
+/* メインコンテンツ */
+.home-main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+}
+
+/* サマリーカード */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.summary-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+}
+
+.summary-card-label {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 10px;
+}
+
+.summary-card-count {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.summary-card-count.is-normal { color: var(--color-accent); }
+.summary-card-count.is-warning { color: var(--color-warning); }
+.summary-card-count.is-danger { color: var(--color-danger); }
+
+/* タスクセクション共通 */
+.task-section {
+    margin-bottom: 20px;
+}
+
+.task-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    margin-bottom: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.task-section-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task-section-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-tertiary);
+    transition: transform 0.2s;
+}
+
+.task-section-toggle.is-collapsed {
+    transform: rotate(-90deg);
+}
+
+.task-section-title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.task-section-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.task-section-meta {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+}
+
+.task-section-add {
+    font-size: 13px;
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+}
+.task-section-add:hover {
+    background: var(--color-accent-light);
+}
+
+.task-section-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.task-section-body.is-collapsed {
+    display: none;
+}
+
+/* タスクカード */
+.task-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.task-card:hover{
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--color-border-strong);
+}
+
+.task-card-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border-strong);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s, background 0.15s;
+    cursor: pointer;
+}
+
+.task-card-check:hover {
+    border-color: var(--color-accent);
+}
+
+.task-card-check.is-done {
+    background: var(--color-success);
+    border-color: var(--color-success);
+    color: #fff;
+}
+
+.task-card-check.is-progress {
+    border-color: var(--color-accent);
+}
+
+.task-card-check.is-progress::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+}
+
+.task-card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.task-card-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.task-card-title.is-done {
+    text-decoration: line-through;
+    color: var(--color-text-tertiary);
+}
+
+.task-card-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.task-card-assignee {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+}
+
+.task-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.task-card-meta.is-overdue {
+    color: var(--color-danger);
+    font-weight: 500;
+}
+
+.task-section-empty {
+    font-size: 13px;
+    color: var(--color-text-tertiary);
+    padding: 12px 16px;
+}
+
+/* チームセクション */
+.team-section-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task-section-members {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+}
