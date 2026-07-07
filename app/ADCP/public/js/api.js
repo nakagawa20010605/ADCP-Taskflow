@@ -119,6 +119,14 @@ const Api = {
         return apiRequest("/user");
     },
 
+    //個人タスク系
+    getMyTasks() {
+        return apiRequest("/my-tasks");
+    },
+    storeMyTask(payload) {
+        return apiRequest("/my-tasks", { method: "POST", body: payload});
+    },
+
     //チーム系
     getTeams() {
         return apiRequest("/teams");
