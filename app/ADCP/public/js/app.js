@@ -32,14 +32,7 @@ const App = {
    */
 
     async startAuthenticated() {
-        const app = document.getElementById("app");
-        app.innerHTML = `
-            <div style="display:flex; align-items:center; justify-content:center; min-height:100vh; flex-direction:column; gap:12px;">
-                <p>ログイン中:${escapeHtml(Auth.currentUser?.name || "")} さん</p>
-                <button class="btn btn-secondary" id="temp-logout-btn">ログアウト</button>
-            </div>
-        `;
-        document.getElementById("temp-logout-btn").addEventListener("click", Auth.logout);
+        await Home.render();
     },
 };
 

@@ -53,11 +53,11 @@ const Home = {
     `;
 
     //日付フィルターのイベント
-    document.getElementById("filter-form").addEventListener("change", (e) => {
+    document.getElementById("filter-from").addEventListener("change", (e) => {
         Home.filterFrom = e.target.value || null;
         Home.renderMain();
     });
-    document.getElementById("filter-to").addEventListener("chsnge", (e) => {
+    document.getElementById("filter-to").addEventListener("change", (e) => {
         Home.filterTo = e.target.value || null;
         Home.renderMain();
     });
@@ -150,7 +150,7 @@ const Home = {
     ];
 
     //重複除去
-    const uniqueTasks = [...new Map(allTasks.mao((t) => [t.id, t])).values()];
+    const uniqueTasks = [...new Map(allTasks.map((t) => [t.id, t])).values()];
 
     return {
         today: uniqueTasks.filter(
@@ -208,7 +208,7 @@ const Home = {
                     <i class="ti ti-plus" style="font-size:14px;"></i> 追加
                 <button>
             </div>
-            <div class="task-section-body" data-body="may-tasks">
+            <div class="task-section-body" data-body="my-tasks">
                 ${tasksHtml}
             </div>
         </div>
@@ -240,7 +240,7 @@ const Home = {
                     <span class="team-section-members">${memberCount}名</span>
                 </div>
                 <button class="task-section-add" data-add-task="team" data-team-id="${team.id}">
-                    <i class="ti ti-plus" style"font-size:14px;"></i> 追加
+                    <i class="ti ti-plus" style="font-size:14px;"></i> 追加
                 </button>
             </div>
             <div class="task-section-body" data-body="team-${team.id}">
@@ -284,13 +284,13 @@ const Home = {
                 data-status-btn="${task.id}"
                 data-current-status="${escapeHtml(task.status)}"
                 aria-label="ステータス切替">
-                ${isDone ? `<i class="ti ti-check" styke="font-size:13px;"></i>` : ""}
+                ${isDone ? `<i class="ti ti-check" style="font-size:13px;"></i>` : ""}
             </button>
             <div class="task-card-body">
                 <div class="task-card-title ${isDone ? "is-done" : ""}">
                     ${escapeHtml(task.title)}
                 </div>
-                <div class="tasl-card-tags">
+                <div class="task-card-tags">
                     <span class="badge ${priorityClass}">${escapeHtml(task.priority)}</span>
                 </div>
                 <div class="task-card-assignee">

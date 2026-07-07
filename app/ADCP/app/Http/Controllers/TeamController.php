@@ -12,7 +12,7 @@ class TeamController extends Controller
     public function index(Request $request)
     {
         $teams = $request->user()->teams()->with('members')->get();
-        $return response()->json($teams);
+        return response()->json($teams);
     }
 
     //チーム作成
