@@ -39,6 +39,10 @@ const Home = {
                         <i class="ti ti-bell" style="font-size:20px;"></i>
                         <span class="notification-dot"></span>
                     </button>
+                    <button class="btn btn-secondary" id="logout-btn" style="font-size:13px; padding:6px 12px">
+                        <i class="ti ti-logout" style="font-size:15px;"></i>
+                        ログアウト
+                    </button>
                 </div>
             </header>
 
@@ -51,6 +55,11 @@ const Home = {
 
         </div>
     `;
+
+    //ログアウトボタン
+    document.getElementById("logout-btn").addEventListener("click", () => {
+        Auth.logout();
+    });
 
     //日付フィルターのイベント
     document.getElementById("filter-from").addEventListener("change", (e) => {
@@ -206,7 +215,7 @@ const Home = {
                 </div>
                 <button class="task-section-add" data-add-task="personal" data-team-id="">
                     <i class="ti ti-plus" style="font-size:14px;"></i> 追加
-                <button>
+                </button>
             </div>
             <div class="task-section-body" data-body="my-tasks">
                 ${tasksHtml}
@@ -265,6 +274,13 @@ const Home = {
         ? "is-progress"
         : "";
     
+    const nextStatus = 
+        task.status === "未着手"
+            ? "進行中にする"
+            :task.status === "進行中"
+            ? "完了にする"
+            : "未着手に戻す";
+
     const dueDateHtml = task.due_date
         ? `<span class="task-card-meta ${isOverdue ? "is-overdue" : ""}">
                 <i class="ti ti-calendar" style="font-size:13px;"></i>
@@ -283,6 +299,7 @@ const Home = {
             <button class="task-card-check ${checkClass}"
                 data-status-btn="${task.id}"
                 data-current-status="${escapeHtml(task.status)}"
+                data-tooltip="${nextStatus}"
                 aria-label="ステータス切替">
                 ${isDone ? `<i class="ti ti-check" style="font-size:13px;"></i>` : ""}
             </button>
@@ -309,6 +326,28 @@ const Home = {
     if(!dateStr) return "";
     const d = new Date(dateStr);
     return `${d.getMonth() + 1}/${d.getDate()}`;
+   },
+
+   /**
+ 　* ローカルデータのステータスを更新する（楽観的UI更新用）
+ 　*/
+   updateTaskStatusLocally(taskId, newStatus) {
+    //マイタスクの更新
+    Home.myTasks = Home.myTasks.map((t) => 
+        t.id === taskId ? { ...t, status: newStatus} : t
+    );
+
+    //チームタスクの更新
+    Object.keys(Home.teamTasks).forEach((teamId) => {
+        Home.teamTasks[teamId] = Home.teamTasks[teamId].map((t) => 
+            t.id === taskId ? { ...t, status: newStatus } : t
+        );
+    });
+
+    //担当タスクの更新
+    Home.assignedTasks = Home.assignedTasks.map((t) => 
+        t.id === taskId ? { ...t, status: newStatus} : t
+    );
    },
 
    /**
@@ -341,10 +380,18 @@ const Home = {
                     : current === "進行中"
                     ? "完了"
                     : "未着手";
+            
+            //先にローカルデータを更新
+            Home.updateTaskStatusLocally(Number(taskId), next);
+            Home.renderMain();
+
+            //バックグラウンドでAPIを呼ぶ
             try {
                 await Api.updateTaskStatus(taskId, next);
-                await Home.fetchAll();
             } catch(err) {
+                //失敗したら元に戻す
+                Home.updateTaskStatusLocally(Number(taskId), current);
+                Home.renderMain();
                 Toast.error("ステータスの更新に失敗しました");
             }
         });

@@ -325,3 +325,29 @@
     font-size: 12px;
     color: var(--color-text-tertiary);
 }
+
+/* ステータスボタンのツールチップ */
+.task-card-check {
+    position: relative;
+}
+
+.task-card-check::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-text-primary);
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opancity 0.15s;
+}
+
+.task-card-check:hover::before {
+    opacity: 1;
+}
