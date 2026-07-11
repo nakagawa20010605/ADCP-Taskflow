@@ -157,10 +157,18 @@ const TaskModal = {
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" id="task-modal-cancel">キャンセル</button>
-                    <button class="btn btn-primary" id="task-modal-submit">
-                        <span class="btn-label">${isEdit ? "保存する" : "作成する"}</span>
-                    </button>
+                    ${isEdit ? `
+                        <button class="btn btn-danger-text" id="task-modal-delete">
+                            <i class="ti ti-trash" style="font-size:15px;"></i>
+                            削除
+                        </button>
+                    ` : ""}
+                    <div style="display:flex; gap:10px; margin-left:auto;">
+                        <button class="btn btn-secondary" id="task-modal-cancel">キャンセル</button>
+                        <button class="btn btn-primary" id="task-modal-submit">
+                            <span class="btn-label">${isEdit ? "保存する" : "作成する"}</span>
+                        </button>
+                    </div>
                 </div>
             </div>                        
         `;
@@ -257,9 +265,33 @@ const TaskModal = {
         const form = document.getElementById("task-form");
         const submitBtn = document.getElementById("task-modal-submit");
         const cancelBtn = document.getElementById("task-modal-cancel");
+        const deleteBtn = document.getElementById("task-modal-delete");
 
         //キャンセルボタン
         cancelBtn.addEventListener("click", Modal.close);
+
+        //削除ボタン
+        if(deleteBtn) {
+            deleteBtn.addEventListener("click", async () => {
+                if(!confirm("このタスクを削除しますか？")) return;
+
+                setButtonLoading(deleteBtn, true, "削除");
+                Modal.lock();
+
+                try {
+                    await Api.deleteTask(task.id);
+                    Modal.unlock();
+                    Modal.close();
+                    Toast.show("タスクを削除しました")
+                    await Home.fetchAll();
+                } catch(err) {
+                    Toast.error("タスクの削除に失敗しました");
+                } finally {
+                    Modal.unlock();
+                    setButtonLoading(deleteBtn, false, "削除");
+                }
+            });
+        }
 
         //送信処理
         submitBtn.addEventListener("click", async () => {
