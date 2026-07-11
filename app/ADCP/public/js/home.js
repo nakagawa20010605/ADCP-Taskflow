@@ -405,5 +405,23 @@ const Home = {
             TaskModal.openCreate(teamId);
         });
     });
+
+    //タスクカードクリック（編集モーダルを開く）
+    document.querySelectorAll(".task-card").forEach((card) => {
+        card.addEventListener("click", (e) => {
+            if(e.target.closest("[data-status-btn]")) return;
+            const taskId = Number(card.dataset.taskId);
+
+            //ローカルデータからタスクを探す
+            const task = 
+                Home.myTasks.find((t) => t.id === taskId) || 
+                Home.assignedTasks.find((t) => t.id === taskId) ||
+                Object.values(Home.teamTasks).flat().find((t) => t.id === taskId);
+            
+            if(task) {
+                TaskModal.openEdit(task);
+            }
+        });
+    });
    },
 };

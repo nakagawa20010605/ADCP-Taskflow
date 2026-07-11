@@ -26,7 +26,7 @@ const TaskModal = {
      */
     openEdit(task) {
         const teams = Home.teams || [];
-        const members = task.teamId
+        const members = task.team_id
             ? (Home.teams.find((t) => t.id === task.team_id)?.members || [])
             : [];
         
