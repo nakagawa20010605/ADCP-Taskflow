@@ -86,7 +86,7 @@ const TaskModal = {
                 <div class="modal-header">
                     <h2 class="modal-title">${title}</h2>
                     <button class="modal-close" aria-label="閉じる">
-                        <i class="ti ti-x"></i>
+                        <i class="ti ti-x" style="font-size:18px"></i>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -120,6 +120,12 @@ const TaskModal = {
 
                         <div class="field-row">
                             <div class="field">
+                                <label class="field-label" for="task-status">ステータス</label>
+                                <select class="select" id="task-status" name="status">
+                                    ${statusOptions}
+                                </select>
+                            </div>
+                            <div class="field">
                                 <label class="field-label" for="task-priority">優先度</label>
                                 <select class="select" id="task-priority" name="priority">
                                     ${priorityOptions}
@@ -129,12 +135,12 @@ const TaskModal = {
 
                         <div class="field-row">
                             <div class="field">
-                                <label class="field-label" for="task-due-date">期日</label>
+                                <label class="field-label" for="task-due_date">期日</label>
                                 <input
                                     class="input"
                                     type="date"
-                                    id="task-due-date"
-                                    name="due-date"
+                                    id="task-due_date"
+                                    name="due_date"
                                     value="${isEdit && task.due_date ? task.due_date : ""}"
                                 />
                             </div>
@@ -177,7 +183,7 @@ const TaskModal = {
         //チーム変更時に担当者セレクトを更新
         if(teamSelect) {
             teamSelect.addEventListener("change", () => {
-                const selectedTeamId = teamSelect.ariaValueMax;
+                const selectedTeamId = teamSelect.value;
                 const members = selectedTeamId
                     ? (Home.teams.find((t) => t.id === Number(selectedTeamId))?.members || [])
                     : [];
@@ -253,7 +259,7 @@ const TaskModal = {
         cancelBtn.addEventListener("click", Modal.close);
 
         //送信処理
-        cancelBtn.addEventListener("click", async () => {
+        submitBtn.addEventListener("click", async () => {
             clearFieldErrors(form);
             const alertEl = document.getElementById("task-modal-alert");
             alertEl.classList.remove("is-visible");

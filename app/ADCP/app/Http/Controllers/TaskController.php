@@ -33,6 +33,10 @@ class TaskController extends Controller
             'assigned_to' => 'nullable|exists:users,id',
             'priority' => 'nullable|in:低,中,高',
             'due_date' => 'nullable|date',
+        ],[
+            'title.required' => 'タイトルは必須項目です',
+            'title.max' => 'タイトルは255文字以内で入力してください',
+            'due_date.date' => '期日の入力が不正です',
         ]);
 
         $task = Task::create([
@@ -84,6 +88,10 @@ class TaskController extends Controller
             'assigned_to' => 'nullable|exists:users,id',
             'priority' => 'nullable|in:低,中,高',
             'due_date' => 'nullable|date',
+        ],[
+            'title.required' => 'タイトルは必須項目です',
+            'title.max' => 'タイトルは255文字以内で入力してください',
+            'due_date.date' => '期日の入力が不正です',
         ]);
 
         $task->update($validated);
@@ -151,6 +159,10 @@ class TaskController extends Controller
             'description' => 'nullable|string',
             'priority' => 'nullable|in:低,中,高',
             'due_date' => 'nullable|date',
+        ],[
+            'title.required' => 'タイトルは必須項目です',
+            'title.max' => 'タイトルは255文字以内で入力してください',
+            'due_date.date' => '期日の入力が不正です',
         ]);
 
         $task = Task::create([

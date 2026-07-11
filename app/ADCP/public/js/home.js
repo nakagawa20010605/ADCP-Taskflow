@@ -398,11 +398,11 @@ const Home = {
     });
 
     //タスク追加ボタン
-    document.querySelectorAll(".task-card").forEach((card) => {
-        card.addEventListener("click", (e) => {
-            if(e.target.closest("[data-status-btn]")) return;
-            const taskId = card.dataset.taskId;
-            Toast.show("タスク詳細画面（実装予定）");
+    document.querySelectorAll("[data-add-task]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const teamId = btn.dataset.teamId || null;
+            TaskModal.openCreate(teamId);
         });
     });
    },
