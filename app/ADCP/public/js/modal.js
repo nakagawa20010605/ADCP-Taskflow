@@ -7,6 +7,9 @@ const Modal = {
      * @param {string} html - モーダルの中身のHTML
      * @param {function} onMounted - DOM挿入後に呼ぶコールバック
      */
+    //ロック状態の管理(モーダルが閉じられないようにするやつ)
+    _isLocked: false, 
+
     open(html, onMounted) {
         //既存のモーダルがあれば閉じる
         Modal.close();
@@ -19,7 +22,7 @@ const Modal = {
 
         //オーバーレイ背景クリックで閉じる
         overlay.addEventListener("click", (e) => {
-            if(e.target === overlay) Modal.close();
+            if(e.target === overlay && !Modal._isLocked) Modal.close();
         });
 
         //Escキーで閉じる
@@ -28,7 +31,9 @@ const Modal = {
         //閉じるボタンのイベント
         const closeBtn = overlay.querySelector(".modal-close");
         if(closeBtn) {
-            closeBtn.addEventListener("click", Modal.close);
+            closeBtn.addEventListener("click", () => {
+                if(!Modal._isLocked) Modal.close();
+            });
         }
 
         //DOM挿入後のコールバック
@@ -41,9 +46,28 @@ const Modal = {
      * モーダルを閉じる
      */
     close() {
+        if(Modal._isLocked) return;
         const overlay = document.getElementById("modal-overlay");
         if(overlay) overlay.remove();
         document.removeEventListener("keydown", Modal._onKeydown);
+    },
+
+    //ロック状態にする（追加・編集処理開始時に呼ぶ）
+    lock() {
+        Modal._isLocked = true;
+        const closeBtn = document.querySelector(".modal-close");
+        const cancelBtn =document.getElementById("task-modal-cancel");
+        if(closeBtn) closeBtn.disabled = true;
+        if(cancelBtn) cancelBtn.disabled = true;
+    },
+
+    //ロック解除（追加・編集処理完了or 失敗時に呼ぶ）
+    unlock() {
+        Modal._isLocked = false;
+        const closeBtn = document.querySelector(".modal-close");
+        const cancelBtn = document.getElementById("task-modal-cancel");
+        if(closeBtn) closeBtn.disabled = false;
+        if(cancelBtn) cancelBtn.disabled = false;
     },
 
     /**

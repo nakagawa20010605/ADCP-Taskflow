@@ -224,6 +224,7 @@ const TaskModal = {
             };
 
             setButtonLoading(submitBtn, true, "作成する");
+            Modal.lock();
 
             try {
                 if(teamId) {
@@ -231,6 +232,7 @@ const TaskModal = {
                 } else {
                     await Api.storeMyTask(payload);
                 }
+                Modal.unlock();
                 Modal.close();
                 Toast.show("タスクを作成しました");
                 await Home.fetchAll();
@@ -243,6 +245,7 @@ const TaskModal = {
                 }
             } finally {
                 setButtonLoading(submitBtn, false, "作成する");
+                Modal.unlock();
             }
         });
     },
@@ -274,9 +277,11 @@ const TaskModal = {
             };
 
             setButtonLoading(submitBtn, true, "保存する");
+            Modal.lock();
 
             try {
                 await Api.updateTask(task.id, payload);
+                Modal.unlock();
                 Modal.close();
                 Toast.show("タスクを更新しました");
                 await Home.fetchAll();
@@ -289,6 +294,7 @@ const TaskModal = {
                 }
             } finally {
                 setButtonLoading(submitBtn, false, "保存する");
+                Modal.unlock();
             }
         });
     },

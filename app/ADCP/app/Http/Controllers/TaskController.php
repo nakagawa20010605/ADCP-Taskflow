@@ -86,6 +86,7 @@ class TaskController extends Controller
             'title' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
             'assigned_to' => 'nullable|exists:users,id',
+            'status' => 'nullable|in:未着手,進行中,完了',
             'priority' => 'nullable|in:低,中,高',
             'due_date' => 'nullable|date',
         ],[
