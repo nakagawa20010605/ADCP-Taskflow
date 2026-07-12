@@ -65,7 +65,7 @@ class TeamController extends Controller
         }
 
         $validated = $request->validate([
-            'email' => 'required|email|exists:user,email',
+            'email' => 'required|email|exists:users,email',
         ]);
 
         $inviteUser = User::where('email', $validated['email'])->first();

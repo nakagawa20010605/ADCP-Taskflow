@@ -35,6 +35,10 @@ const Home = {
                     </div>
                 </div>
                 <div class="home-header-right">
+                    <button class="btn btn-secondary" id="invite-btn" style="font-size:13px; padding:6px 12px;">
+                        <i class="ti ti-user-plus" style="font-size:15px;"></i>
+                        メンバーを招待
+                    </button>
                     <button class="notification-btn" aria-label="通知">
                         <i class="ti ti-bell" style="font-size:20px;"></i>
                         <span class="notification-dot"></span>
@@ -55,6 +59,11 @@ const Home = {
 
         </div>
     `;
+
+    //メンバー招待ボタン
+    document.getElementById("invite-btn").addEventListener("click", () => {
+        InviteModal.open();
+    });
 
     //ログアウトボタン
     document.getElementById("logout-btn").addEventListener("click", () => {
