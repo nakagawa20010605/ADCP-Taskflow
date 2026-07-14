@@ -103,3 +103,58 @@
     margin-top: 4px;
     line-height: 1.5;
 }
+
+/* チーム作成モーダル */
+.team-color-swatches {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.team-color-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: transform 0.1s, border-color 0.15s;
+    flex-shrink: 0;
+}
+
+.team-color-swatch:hover {
+    transform: scale(1.15);
+}
+
+.team-color-swatch.is-selected {
+    border-color: var(--color-text-primary);
+}
+
+.team-preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-top: 8px;
+}
+
+.team-preview-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.team-preview-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}

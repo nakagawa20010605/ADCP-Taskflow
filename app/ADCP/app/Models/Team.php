@@ -12,6 +12,7 @@ class Team extends Model
 
     protected $fillable = [
         'name',
+        'color',
         'created_by',
     ];
 

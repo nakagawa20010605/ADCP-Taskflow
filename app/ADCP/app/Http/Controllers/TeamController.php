@@ -20,10 +20,14 @@ class TeamController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'color' => 'nullable|string|max:7',
+        ], [
+            'name.required' => 'チーム名を入力してください',
         ]);
 
         $team = Team::create([
             'name' => $validated['name'],
+            'color' => $validated['color'] ?? '#4F46E5',
             'created_by' => $request->user()->id,
         ]);
         $team->members()->attach($request->user()->id, ['role' => 'owner']);

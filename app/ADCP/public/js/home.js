@@ -24,6 +24,10 @@ const Home = {
                     <button class="btn-icon" id="sidebar-toggle-btn" aria-label="メニュー">
                         <i class="ti ti-menu-2" style="font-size:20px;"></i>
                     </button>
+                    <button class="btn btn-secondary" id="create-team-btn" style="font-size:13px; padding:6px 12px;">
+                        <i class="ti ti-plus" style="font-size:15px;"></i>
+                        チームを作成
+                    </button>
                     <div class="header-filter">
                         <span class="header-filter-label">
                             <i class="ti ti-filter" style="font-size:14px;"></i>
@@ -59,6 +63,11 @@ const Home = {
 
         </div>
     `;
+
+    //チーム作成ボタン
+    document.getElementById("create-team-btn").addEventListener("click", () => {
+        TeamModal.open();
+    });
 
     //メンバー招待ボタン
     document.getElementById("invite-btn").addEventListener("click", () => {
