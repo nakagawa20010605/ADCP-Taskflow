@@ -149,7 +149,7 @@ const TeamModal = {
                 Modal.unlock();
                 Modal.close();
                 Toast.show("チームを作成しました");
-                await Home.fetchAll();
+                location.reload();
             } catch(err) {
                 if(err.status === 422) {
                     applyFieldErrors(err.errors, form);

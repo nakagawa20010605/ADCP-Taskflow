@@ -16,67 +16,48 @@ const Home = {
    async render() {
     const app = document.getElementById("app");
     app.innerHTML = `
-        <div class="home-screen">
-
-            <!-- ヘッダー -->
-            <header class="home-header">
-                <div class="home-header-left">
-                    <button class="btn-icon" id="sidebar-toggle-btn" aria-label="メニュー">
-                        <i class="ti ti-menu-2" style="font-size:20px;"></i>
-                    </button>
-                    <button class="btn btn-secondary" id="create-team-btn" style="font-size:13px; padding:6px 12px;">
-                        <i class="ti ti-plus" style="font-size:15px;"></i>
-                        チームを作成
-                    </button>
-                    <div class="header-filter">
-                        <span class="header-filter-label">
-                            <i class="ti ti-filter" style="font-size:14px;"></i>
-                            期日で絞り込み
-                        </span>
-                        <input class="header-date-input" type="date" id="filter-from" />
-                        <span>～</span>
-                        <input class="header-date-input" type="date" id="filter-to" />
-                    </div>
-                </div>
-                <div class="home-header-right">
-                    <button class="btn btn-secondary" id="invite-btn" style="font-size:13px; padding:6px 12px;">
-                        <i class="ti ti-user-plus" style="font-size:15px;"></i>
-                        メンバーを招待
-                    </button>
-                    <button class="notification-btn" aria-label="通知">
-                        <i class="ti ti-bell" style="font-size:20px;"></i>
-                        <span class="notification-dot"></span>
-                    </button>
-                    <button class="btn btn-secondary" id="logout-btn" style="font-size:13px; padding:6px 12px">
-                        <i class="ti ti-logout" style="font-size:15px;"></i>
-                        ログアウト
-                    </button>
-                </div>
-            </header>
+        <div class="home-screen layout">
 
             <!-- メインコンテンツ -->
-            <main class="home-main" id="home-main">
-                <div style="display:flex; align-items:center; justify-content:center; padding:60px 0;">
-                    <div class="spinner"></div>
-                </div>
-            </main>
+            <div class="layout-main" id="layout-main">
 
+                <!-- ヘッダー -->
+                <header class="home-header">
+                    <div class="home-header-left">
+                        <button class="btn-icon" id="sidebar-toggle-btn" aria-label="メニュー">
+                            <i class="ti ti-menu-2" style="font-size:20px;"></i>
+                        </button>
+                        <div class="header-filter">
+                            <span class="header-filter-label">
+                                <i class="ti ti-filter" style="font-size:14px;"></i>
+                                期日で絞り込み
+                            </span>
+                            <input class="header-date-input" type="date" id="filter-from" />
+                            <span>～</span>
+                            <input class="header-date-input" type="date" id="filter-to" />
+                        </div>
+                    </div>
+                    <div class="home-header-right">
+                        <button class="notification-btn" aria-label="通知">
+                            <i class="ti ti-bell" style="font-size:20px;"></i>
+                            <span class="notification-dot"></span>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- メインコンテンツ -->
+                <main class="home-main" id="home-main">
+                    <div style="display:flex; align-items:center; justify-content:center; padding:60px 0;">
+                        <div class="spinner"></div>
+                    </div>
+                </main>
+            </div>
         </div>
     `;
 
-    //チーム作成ボタン
-    document.getElementById("create-team-btn").addEventListener("click", () => {
-        TeamModal.open();
-    });
-
-    //メンバー招待ボタン
-    document.getElementById("invite-btn").addEventListener("click", () => {
-        InviteModal.open();
-    });
-
-    //ログアウトボタン
-    document.getElementById("logout-btn").addEventListener("click", () => {
-        Auth.logout();
+    //ハンバーガーメニューのイベント
+    document.getElementById("sidebar-toggle-btn").addEventListener("click", () => {
+        Sidebar.toggle();
     });
 
     //日付フィルターのイベント
@@ -125,6 +106,14 @@ const Home = {
         Home.assignedTasks = Object.values(Home.teamTasks)
             .flat()
             .filter((task) => task.assigned_to === userId);
+
+        //サイドバーを描画（初回のみ）
+        if(!document.getElementById("sidebar")) {
+            Sidebar.render();
+        } else {
+            Sidebar.refreshTeams();
+        }
+        
         Home.renderMain();
     } catch(err) {
         Toast.error("データの取得に失敗しました");

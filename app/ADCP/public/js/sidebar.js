@@ -2,7 +2,7 @@
    サイドバー
 =========================================== */
 const Sidebar = {
-    _isOpen: true,
+    _isOpen: false,
 
     /**
      * サイドバーのHTMLを生成して描画する
@@ -87,6 +87,8 @@ const Sidebar = {
         }
 
         Sidebar._bindEvents();
+
+        Sidebar.close();
     },
 
     /**
@@ -95,7 +97,15 @@ const Sidebar = {
     _bindEvents() {
         //ログアウト
         document.getElementById("sidebar-logout-btn")
-            ?.addEventListener("click", () => TeamModal.open());
+            ?.addEventListener("click", async () => {
+                const logoutBtn = document.getElementById("sidebar-logout-btn");
+
+                //ローディング状態にする
+                logoutBtn.disabled = true;
+                logoutBtn.innerHTML = `<div class="spinner" style="width:16px; height:16px; border-color:rgba(255,255,255,0.3); border-top-color:#fff"></div>`;
+
+                await Auth.logout();
+            });
 
         //チーム作成
         document.getElementById("sidebar-create-team-btn")
