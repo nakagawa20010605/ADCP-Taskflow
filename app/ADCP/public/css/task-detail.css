@@ -1,0 +1,310 @@
+/* ===========================================
+   タスク詳細画面
+=========================================== */
+.task-detail-screen {
+    min-height: 100vh;
+    background: var(--color-bg);
+}
+
+/* ヘッダー */
+.task-detail-header {
+    height: 52px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.task-detail-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.task-detail-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s, color 0.15s;
+}
+
+.back-btn:hover {
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+}
+
+.task-detail-title {
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px;
+}
+
+/* メインコンテンツ */
+.task-detail-main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 24px;
+    align-items: start;
+}
+
+/* タスク情報カード */
+.task-info-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+}
+
+.task-info-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.task-info-description {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    margin-bottom: 20px;
+}
+
+.task-info-description.is-empty {
+    color: var(--color-text-tertiary);
+    font-style: italic;
+}
+
+/* メタ情報 */
+.task-meta-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.task-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.task-meta-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.task-meta-value {
+    font-size: 13px;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.task-meta-value.is-overdue {
+    color: var(--color-danger);
+}
+
+/* ステータスバッジ */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.status-badge.is-todo {
+    background: var(--color-bg);
+    color: var(--color-text-secondary);
+}
+
+.status-badge.is-progress {
+    background: var(--color-accent-light);
+    color: var(--color-accent-text);
+}
+
+.status-badge.is-done {
+    background: var(--color-success-light);
+    color: var(--color-success);
+}
+
+/* コメントセクション */
+.comment-section {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-top: 0;
+    grid-column: 1 / -1;
+}
+
+.comment-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--color-text-primary);
+}
+
+/* コメントフォーム */
+.comment-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.comment-form-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.comment-form-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.comment-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 72px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-light);
+}
+
+.comment-form-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* コメント一覧 */
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 10px;
+}
+
+.comment-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--color-border-strong);
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.comment-body {
+    flex: 1;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.comment-author {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.comment-date {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+}
+
+.comment-content {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.comment-delete-btn {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.comment-delete-btn:hover {
+    background: var(--color-danger-light);
+    color: var(--color-danger);
+}
+
+.comment-empty {
+    font-size: 13px;
+    color: var(--color-text-tertiary);
+    text-align: center;
+    padding: 20px 0;
+}
