@@ -43,7 +43,7 @@ class CommentController extends Controller
     //コメント削除
     public function destroy(Request $request, Comment $comment)
     {
-        if(!$task->team->members->contains($request->user()->id)){
+        if($comment->user_id !== $request->user()->id){
             return response()->json(['message' => '権限がありません'], 403);
         }
 

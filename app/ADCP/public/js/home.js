@@ -113,7 +113,7 @@ const Home = {
         } else {
             Sidebar.refreshTeams();
         }
-        
+
         Home.renderMain();
     } catch(err) {
         Toast.error("データの取得に失敗しました");
@@ -413,9 +413,9 @@ const Home = {
         });
     });
 
-    //タスクカードクリック（編集モーダルを開く）
+    //タスクカードクリック（詳細画面に遷移）
     document.querySelectorAll(".task-card").forEach((card) => {
-        card.addEventListener("click", (e) => {
+        card.addEventListener("click", async (e) => {
             if(e.target.closest("[data-status-btn]")) return;
             const taskId = Number(card.dataset.taskId);
 
@@ -426,7 +426,7 @@ const Home = {
                 Object.values(Home.teamTasks).flat().find((t) => t.id === taskId);
             
             if(task) {
-                TaskModal.openEdit(task);
+                await TaskDetail.render(task);
             }
         });
     });

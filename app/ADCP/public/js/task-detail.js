@@ -39,9 +39,7 @@ const TaskDetail = {
                     <!-- タスク情報カード -->
                     <div class="task-info-card">
                         <div class="task-info-title">${escapeHtml(task.title)}</div>
-                        <div class="task-info-description ${!task.description ? "is-empty" : ""}">
-                            ${task.description ? escapeHtml(task.description) : "説明はありません"}
-                        </div>
+                        <div class="task-info-description ${!task.description ? "is-empty" : ""}">${task.description ? escapeHtml(task.description) : "説明はありません"}</div>
                     </div>
 
                     <!-- メタ情報カード -->
@@ -66,7 +64,7 @@ const TaskDetail = {
                                     class="comment-input"
                                     id="comment-input"
                                     placeholder="コメントを入力..."
-                                    rouws="3"
+                                    rows="3"
                                 ></textarea>
                                 <div class="comment-form-footer">
                                     <button class="btn btn-primary" id="comment-submit-btn">
@@ -144,8 +142,8 @@ const TaskDetail = {
     _renderDueDate(due_date) {
         if(!due_date) return "未設定";
         const today = new Date().toISOString().split("T")[0];
-        const isOverdue = dueDate < today;
-        const d = new Date(dueDate);
+        const isOverdue = due_date < today;
+        const d = new Date(due_date);
         const formatted = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
         return `
             <span class="${isOverdue ? "is-overdue" : ""}">
@@ -209,7 +207,12 @@ const TaskDetail = {
         list.querySelectorAll("[data-delete-comment]").forEach((btn) => {
             btn.addEventListener("click", async () => {
                 if(!confirm("このコメントを削除しますか？")) return;
-                const commentId = btn.CDATA_SECTION_NODE.deleteComment;
+                const commentId = btn.dataset.deleteComment;
+
+                //削除中の表示
+                btn.disabled = true;
+                btn.innerHTML = `<div class="spinner" style="width:13px; height:13px; border-width:1.5px;"></div>`;
+
                 try {
                     await Api.deleteComment(commentId);
                     TaskDetail._comments = TaskDetail._comments.filter(
