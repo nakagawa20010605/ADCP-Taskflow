@@ -255,9 +255,16 @@ const Home = {
                     <span class="badge-count">${count}</span>
                     <span class="team-section-members">${memberCount}名</span>
                 </div>
-                <button class="task-section-add" data-add-task="team" data-team-id="${team.id}">
-                    <i class="ti ti-plus" style="font-size:14px;"></i> 追加
-                </button>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <button class="btn btn-secondary" style="font-size:12px; padding:4px 10px;"
+                        data-member-btn="${team.id}">
+                        <i class="ti ti-users" style="font-size:13px;"></i>
+                        メンバー
+                    </button>
+                    <button class="task-section-add" data-add-task="team" data-team-id="${team.id}">
+                        <i class="ti ti-plus" style="font-size:14px;"></i> 追加
+                    </button>
+                </div>
             </div>
             <div class="task-section-body" data-body="team-${team.id}">
                 ${tasksHtml}
@@ -427,6 +434,18 @@ const Home = {
             
             if(task) {
                 await TaskDetail.render(task);
+            }
+        });
+    });
+
+    //メンバーボタン
+    document.querySelectorAll("[data-member-btn]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const teamId = Number(btn.dataset.memberBtn);
+            const team = Home.teams.find((t) => t.id === teamId);
+            if(team) {
+                MemberModal.open(team);
             }
         });
     });
